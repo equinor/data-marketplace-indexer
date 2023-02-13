@@ -10,7 +10,9 @@
     "test": "jest",
     "lint": "eslint \"**/*.{j,t}s\"",
     "format": "prettier --write \"**/*.{j,t}s\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "azurite": "azurite",
+    "dev": "npm run watch start"
   },
   "lint-staged": {
     "*.{j,t}s": [
