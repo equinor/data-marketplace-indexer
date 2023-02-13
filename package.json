@@ -9,7 +9,14 @@
     "start": "func start",
     "test": "echo \"No tests yet...\"",
     "lint": "eslint \"**/*.{j,t}s\"",
-    "format": "prettier --write \"**/*.{j,t}s\""
+    "format": "prettier --write \"**/*.{j,t}s\"",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{j,t}s": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "devDependencies": {
     "@azure/functions": "^3.0.0",
@@ -17,6 +24,7 @@
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "eslint": "^8.34.0",
     "eslint-plugin-import": "^2.27.5",
+    "husky": "^8.0.3",
     "prettier": "^2.8.4",
     "typescript": "^4.0.0"
   }
