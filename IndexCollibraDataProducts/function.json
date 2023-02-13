@@ -1,10 +1,11 @@
 {
   "bindings": [
     {
-      "name": "myTimer",
-      "type": "timerTrigger",
-      "direction": "in",
-      "schedule": "0 */0 0 * * *"
+      "authLevel": "function",
+      "name": "req",
+      "route": "indexCollibraDataProducts",
+      "type": "httpTrigger",
+      "direction": "in"
     }
   ],
   "scriptFile": "../dist/IndexCollibraDataProducts/index.js"
