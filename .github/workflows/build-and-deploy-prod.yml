@@ -6,6 +6,9 @@ on:
       type: string
       default: main
 
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
 jobs:
   check-code:
     uses: equinor/data-marketplace-indexer/.github/workflows/check-code.yml@main
