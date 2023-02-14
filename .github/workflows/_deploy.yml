@@ -5,6 +5,9 @@ on:
       environment:
         required: true
         type: string
+      cache-key:
+        required: true
+        type: string
     secrets:
       SLACK_WEBHOOK_URL:
         required: true
@@ -68,7 +71,7 @@ jobs:
           path: |
             ./*
             .npm
-          key: ${{ github.sha }}
+          key: ${{ inputs.cache-key }}
       - name: Build ⚙
         id: build-functions
         run: |

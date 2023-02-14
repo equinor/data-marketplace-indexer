@@ -12,9 +12,12 @@ env:
 jobs:
   setup:
     uses: equinor/data-marketplace-indexer/.github/workflows/_setup.yml@main
+    with:
+      cache-key: ${{ github.sha }}
     secrets: inherit
   deploy:
     uses: equinor/data-marketplace-indexer/.github/workflows/_deploy.yml@main
     with:
       environment: prod
+      cache-key: ${{ github.sha }}
     secrets: inherit
