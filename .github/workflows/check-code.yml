@@ -16,11 +16,22 @@ env:
 jobs:
   setup:
     uses: equinor/data-marketplace-indexer/.github/workflows/_setup.yml@main
+    with:
+      cache-key: ${{ github.sha }}
+
   lint:
     name: Lint
     needs: setup
     runs-on: ubuntu-latest
     steps:
+      - name: Get files
+        id: get-files
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./*
+            .npm
+          key: ${{ github.sha }}
       - name: Run linter
         id: lint
         run: npm run lint
@@ -31,11 +42,20 @@ jobs:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
         if: failure()
+
   test:
     name: Test
     needs: setup
     runs-on: ubuntu-latest
     steps:
+      - name: Get files
+        id: get-files
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./*
+            .npm
+          key: ${{ github.sha }}
       - name: Run tests
         id: test
         run: npm test -- --passWithNoTests

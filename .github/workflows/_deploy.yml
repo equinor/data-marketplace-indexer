@@ -58,19 +58,14 @@ jobs:
     needs: check-code
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-      - name: Setup node 🧱
-        uses: actions/setup-node@v3
+      - name: Get files
+        id: get-files
+        uses: actions/cache@v3
         with:
-          node-version-file: ".nvmrc"
-          cache: "npm"
-      - name: Node version
-        id: node-v
-        run: node --version
-      - name: Install dependencies 🔧
-        id: install-dependencies
-        run: npm ci
+          path: |
+            ./*
+            .npm
+          key: ${{ github.sha }}
       - name: Build ⚙
         id: build-functions
         run: |
@@ -94,7 +89,7 @@ jobs:
 
   deploy-function-application:
     environment:
-      name: production
+      name: ${{ inputs.environment }}
     needs: [build-function-application, deploy-az-infrastructure]
     runs-on: ubuntu-latest
     steps:
