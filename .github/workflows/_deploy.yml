@@ -5,6 +5,13 @@ on:
       environment:
         required: true
         type: string
+    secrets:
+      SLACK_WEBHOOK_URL:
+        required: true
+      AZURE_CREDENTIALS:
+        required: true
+      PAT:
+        required: true
 
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -16,10 +23,7 @@ env:
   BUILD_ARTIFACT_PATH: ${{ github.workspace }}/build_artifacts
 
 jobs:
-  check-code:
-    uses: equinor/data-marketplace-indexer/.github/workflows/check-code.yml@main
   deploy-az-infrastructure:
-    needs: check-code
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -55,7 +59,6 @@ jobs:
         if: failure()
 
   build-function-application:
-    needs: check-code
     runs-on: ubuntu-latest
     steps:
       - name: Get files

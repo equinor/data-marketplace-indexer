@@ -8,7 +8,6 @@ on:
     branches: [main]
     paths:
       - '**.{j,t}s'
-  workflow_call:
 
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

@@ -4,10 +4,15 @@ on:
     branches:
       - main
 
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
 jobs:
-  check-code:
-    uses: equinor/data-marketplace-indexer/.github/workflows/check-code.yml@main
+  setup:
+    uses: equinor/data-marketplace-indexer/.github/workflows/_setup.yml@main
+    secrets: inherit
   deploy:
     uses: equinor/data-marketplace-indexer/.github/workflows/_deploy.yml@main
     with:
       environment: test
+    secrets: inherit
