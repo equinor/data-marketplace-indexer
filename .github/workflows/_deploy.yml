@@ -19,10 +19,10 @@ on:
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   AZURE_RESOURCE_GROUP_NAME: rg-datamarketplace-${{ inputs.environment }}
-  AZURE_FUNCTIONAPP_NAME: func-search-index-${{ inputs.environment }}
+  AZURE_FUNCTIONAPP_NAME: func-indexer-${{ inputs.environment }}
   AZURE_FUNCTIONAPP_PACKAGE_PATH: ${{ github.workspace }}/
   BUILD_OUTPUT_PATH: ${{ github.workspace }}/
-  BUILD_PACKAGE_NAME: searchindexer.zip
+  BUILD_PACKAGE_NAME: indexer.zip
   BUILD_ARTIFACT_PATH: ${{ github.workspace }}/build_artifacts
 
 jobs:
@@ -50,9 +50,9 @@ jobs:
         with:
           inlineScript: |
             az deployment group create \
-            --name az-func-adapter-service-deploy \
+            --name az-func-indexer-deploy \
             --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
-            --template-file $GITHUB_WORKSPACE/ci/build-and-deploy/search-index-service.bicep \
+            --template-file $GITHUB_WORKSPACE/ci/build-and-deploy/indexer-service.bicep \
             --parameters "{ \"azureEnvironment\": { \"value\": \"${{ inputs.environment }}\" } }"
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v1
