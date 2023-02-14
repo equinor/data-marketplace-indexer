@@ -15,6 +15,7 @@ jobs:
     secrets: inherit
   deploy:
     uses: equinor/data-marketplace-indexer/.github/workflows/_deploy.yml@main
+    needs: setup
     with:
       environment: test
       cache-key: ${{ github.sha }}
