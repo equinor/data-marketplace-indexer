@@ -1,0 +1,48 @@
+name: Check code
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.{j,t}s'
+  pull_request:
+    branches: [main]
+    paths:
+      - '**.{j,t}s'
+  workflow_call:
+
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+jobs:
+  setup:
+    uses: equinor/data-marketplace-indexer/.github/workflows/_setup.yml@main
+  lint:
+    name: Lint
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run linter
+        id: lint
+        run: npm run lint
+      - name: Log errors to Slack 📄
+        id: slack-err-log
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+  test:
+    name: Test
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests
+        id: test
+        run: npm test -- --passWithNoTests
+      - name: Log errors to Slack 📄
+        id: slack-err-log
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()

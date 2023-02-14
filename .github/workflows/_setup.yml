@@ -1,0 +1,34 @@
+name: _Setup
+on:
+  workflow_call:
+
+jobs:
+  check-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - name: Setup node 🧱
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+      - name: Node version
+        id: node-v
+        run: node --version
+      - name: Install dependencies 🔧
+        id: install-dependencies
+        run: npm ci
+      - name: Run ESLint 🔎
+        id: lint
+        run: npm run lint
+      - name: Run tests ✅
+        id: test
+        run: npm test -- --passWithNoTests
+      - name: Log errors to Slack 📄
+        id: slack-err-log
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()

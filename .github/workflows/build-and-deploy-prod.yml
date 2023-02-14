@@ -1,8 +1,10 @@
 name: Build and deploy to test environment
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    bicep-branch:
+      required: false
+      type: string
+      default: main
 
 jobs:
   check-code:
@@ -10,4 +12,4 @@ jobs:
   deploy:
     uses: equinor/data-marketplace-indexer/.github/workflows/_deploy.yml@main
     with:
-      environment: test
+      environment: prod
