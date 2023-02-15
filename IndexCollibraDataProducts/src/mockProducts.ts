@@ -1,5 +1,13 @@
-export const mockData = [
+//import * as E from 'fp-ts/lib/Either'
+//import * as TE from 'fp-ts/lib/TaskEither'
+// import { pipe } from 'fp-ts/lib/function'
+
+// @TOOO Get from models
+import type { CollibraAsset } from '../../common/types'
+
+export const mockData: CollibraAsset[] = [
   {
+    objectID: 'be3a48195ff1f_dashboard_generated_id',
     createdAt: '2022-08-12T07:41:18.181Z',
     excerpt: 'A test data set',
     description: 'This data contains some test data',
@@ -7,7 +15,6 @@ export const mockData = [
     name: 'Test data',
     provider: 'Collibra',
     qualityScore: 0,
-    rating: 0,
     tags: ['Demand', 'Capacity', 'Supply'],
     community: ['Test department'],
     type: 'Data Product',
@@ -18,3 +25,11 @@ export const mockData = [
     owner: ['Ola Nordmann'],
   },
 ]
+
+//type FetchDataType = () => TE.TaskEither<Error, CollibraAsset[]>
+
+//const fetch: FetchDataType = TE.of(mockData)
+
+//export const fetchData = fetch()
+
+export const fetchData = () => mockData

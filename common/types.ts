@@ -5,6 +5,7 @@ export type GetProcessEnvType = IO.IO<E.Either<string, string>>
 
 // @TODO data marketplace models
 export type CollibraAsset = {
+  objectID: string
   createdAt: string
   excerpt: string
   description: string
