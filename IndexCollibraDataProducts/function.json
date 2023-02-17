@@ -3,7 +3,7 @@
     {
       "authLevel": "function",
       "name": "req",
-      "route": "indexCollibraDataProducts",
+      "route": "index-collibra",
       "type": "httpTrigger",
       "direction": "in"
     }
