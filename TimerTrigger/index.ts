@@ -1,15 +1,19 @@
 import { AzureFunction, Context, Timer } from '@azure/functions'
 import axios from 'axios'
+import DotenvAzure from 'dotenv-azure'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const timerTrigger: AzureFunction = async function (context: Context, myTimer: Timer): Promise<void> {
+  await new DotenvAzure().config({
+    allowEmptyValues: true,
+    debug: false,
+  })
   const timeStamp = new Date().toISOString()
 
   if (myTimer.isPastDue) {
     context.log('Timer function is running late!')
   }
-  // @TODO Fix this, doesn't work
-  const url = 'http://localhost:7071/api/indexCollibraDataProducts'
+  const indexerBaseUrl = process.env.INDEXER_BASE_URL
+  const url = `${indexerBaseUrl}/api/index-collibra`
 
   await axios.post(url)
   context.log('Timer trigger function ran!', timeStamp)

@@ -1,5 +1,4 @@
 import { AzureFunction, Context } from '@azure/functions'
-// import algoliasearch from 'algoliasearch'
 import DotenvAzure from 'dotenv-azure'
 import * as E from 'fp-ts/lib/Either'
 import { ap } from 'fp-ts/lib/Identity'
@@ -11,7 +10,7 @@ import { update, generateIndexName } from '../common/algolia'
 import { getEnvironment } from '../common/env'
 
 import { indexSettings } from './src/indexSettings'
-import { fetchData /* , mockData */ } from './src/mockProducts'
+import { fetchData } from './src/mockProducts'
 
 const indexIdentifier = 'Collibra'
 
