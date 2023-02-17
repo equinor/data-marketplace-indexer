@@ -11,7 +11,8 @@ Service for fetching data from sources and push to Algolia index.
 ### Run the Azure function locally
 
 1. Set development storage to true in local.settings.json `"AzureWebJobsStorage": "UseDevelopmentStorage=true"`
-2. Start scripts
+2. Add environment variables see `.env.template`
+3. Start scripts
 
 ```
   npm run azurite
