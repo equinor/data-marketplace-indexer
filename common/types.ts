@@ -11,7 +11,7 @@ export type CollibraAsset = {
   description: string
   id: string
   name: string
-  provider: 'Collibra'
+  provider: 'Collibra' | 'PowerBI'
   qualityScore: number
   tags: string[]
   community: string[]
