@@ -14,6 +14,7 @@ env:
 
 jobs:
   setup:
+    name: Setup
     uses: equinor/data-marketplace-indexer/.github/workflows/_setup.yml@main
     with:
       cache-key: ${{ github.sha }}
