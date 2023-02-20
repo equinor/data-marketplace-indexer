@@ -18,6 +18,7 @@ jobs:
     uses: equinor/data-marketplace-indexer/.github/workflows/_setup.yml@main
     with:
       cache-key: ${{ github.sha }}
+    secrets: inherit
 
   lint:
     name: Lint
