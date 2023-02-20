@@ -1,4 +1,4 @@
-name: Build and deploy to test environment
+name: Build and deploy to prod environment
 on:
   workflow_dispatch:
     bicep-branch:
@@ -11,6 +11,7 @@ env:
 
 jobs:
   setup:
+    name: Setup
     uses: equinor/data-marketplace-indexer/.github/workflows/_setup.yml@main
     with:
       cache-key: ${{ github.sha }}
