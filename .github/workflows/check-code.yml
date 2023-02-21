@@ -17,7 +17,7 @@ env:
 
 jobs:
   setup:
-    name: Setup
+    name: Checkout and setup
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
