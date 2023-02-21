@@ -1,5 +1,7 @@
 # Data Marketplace search indexer
 
+Service for fetching data from sources and push to Algolia index.
+
 ## Getting started
 
 ### Prereq
