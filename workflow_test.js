@@ -2,4 +2,4 @@
 // the check-code github action will run
 // on pull requests
 
-console.log('Hello. This is a test')
+console.log('Hello. This is a test. Wow!')
