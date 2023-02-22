@@ -12,8 +12,8 @@ jobs:
     uses: equinor/data-marketplace-indexer/.github/workflows/_setup.yml@main
     with:
       cache-key: ${{ github.sha }}
-      secrets.SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
     name: Checkout and setup
+    secrets: inherit
 
   lint:
     name: Lint
