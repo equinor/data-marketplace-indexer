@@ -9,39 +9,11 @@ env:
 
 jobs:
   setup:
+    uses: equinor/data-marketplace-indexer/.github/workflows/_setup.yml@main
+    with:
+      cache-key: ${{ github.sha }}
+      secrets.SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
     name: Checkout and setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@v3
-      - name: Setup Node
-        id: setup-node
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'npm'
-      - name: Node version
-        run: node --version
-      - name: NPM version
-        run: npm --version
-      - name: Install dependencies
-        id: install-dependencies
-        run: npm ci
-      - name: Cache files
-        id: cache-files
-        uses: actions/cache@v3
-        with:
-          path: |
-            ./*
-            .npm
-          key: ${{ github.sha }}
-      - name: Log errors to Slack
-        uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
 
   lint:
     name: Lint
