@@ -40,6 +40,24 @@ export const mockData: CollibraAsset[] = [
     dataSteward: ['Kari Andersen'],
     owner: ['Ola Nordmann'],
   },
+  {
+    objectID: 'be3a48195f5451f_233312',
+    createdAt: '2022-08-12T07:41:18.181Z',
+    excerpt: 'Hello world',
+    description: 'This data is just a test',
+    id: 'af6f7548-124c-4cf5-9ca5-aa216a434234ss',
+    name: 'Hello world from Postman',
+    provider: 'Collibra',
+    qualityScore: 0,
+    tags: ['Renewable'],
+    community: ['Test department'],
+    type: 'Data Product',
+    updatedAt: '2022-12-03T07:06:11.347Z',
+    updateFrequency: 'Hourly',
+    dataOfficeAdmin: ['Ola Nordmann', 'Kari Andersen'],
+    dataSteward: ['Kari Andersen'],
+    owner: ['Ola Nordmann'],
+  },
 ]
 
 type FetchDataType = () => TE.TaskEither<Error, CollibraAsset[]>
