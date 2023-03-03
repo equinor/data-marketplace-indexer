@@ -46,7 +46,7 @@ export const mockData: CollibraAsset[] = [
     excerpt: 'Hello world',
     description: 'This data is just a test',
     id: 'af6f7548-124c-4cf5-9ca5-aa216a434234ss',
-    name: 'Hello world from Postman',
+    name: 'Hello world',
     provider: 'Collibra',
     qualityScore: 0,
     tags: ['Renewable'],

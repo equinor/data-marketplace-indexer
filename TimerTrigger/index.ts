@@ -13,6 +13,9 @@ const timerTrigger: AzureFunction = async function (context: Context, myTimer: T
     context.log('Timer function is running late!')
   }
   const indexerBaseUrl = process.env.INDEXER_BASE_URL
+  /* const indexerServiceAppKey = process.env.INDEXER_SERVICE_APP_KEY
+  console.log('The values', indexerBaseUrl, indexerServiceAppKey) */
+
   const url = `${indexerBaseUrl}/api/index-collibra`
 
   await axios.post(url)
