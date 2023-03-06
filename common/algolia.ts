@@ -5,7 +5,7 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
 
 import { getAlgoliaApiKey, getAlgoliaAppId } from './env'
-import type { CollibraAsset } from './types'
+import { IndexableAsset } from './types'
 
 const algoliaSearchCurried = (appId: string) => (apiKey: string) => algoliasearch(appId, apiKey)
 
@@ -24,7 +24,7 @@ const init: InitType = (indexName) => {
 }
 
 // Push to Algolia index
-type UpdateIndexType = (data: readonly CollibraAsset[]) => (index: SearchIndex) => TE.TaskEither<Error, SearchIndex>
+type UpdateIndexType = (data: readonly IndexableAsset[]) => (index: SearchIndex) => TE.TaskEither<Error, SearchIndex>
 const updateIndex: UpdateIndexType = (data) => (index) =>
   pipe(
     TE.tryCatch(
@@ -46,7 +46,7 @@ export const updateSettings: UpdateSettingsType = (settings) => (index) =>
 
 type UpdateType = (
   indexName: string,
-) => (indexSettings: Settings) => (mappedData: readonly CollibraAsset[]) => TE.TaskEither<string | Error, string>
+) => (indexSettings: Settings) => (mappedData: readonly IndexableAsset[]) => TE.TaskEither<string | Error, string>
 export const update: UpdateType = (indexName) => (indexSettings) => (mappedData) => {
   return pipe(
     init(indexName),
