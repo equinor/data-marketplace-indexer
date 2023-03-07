@@ -38,18 +38,35 @@ const httpTrigger: AzureFunction = async function (context: Context): Promise<vo
     TE.flatten,
     TE.map(A.map<Asset, IndexableAsset>(assetToIndexable([]))),
     TE.chainW((data) => pipe(updateAlgolia(), E.ap(E.of(data)), TE.fromEither)),
+    TE.flatten,
     TE.mapLeft(toNetError(HttpStatusCode.InternalServerError)),
     TE.match(
-      (err) =>
-        new Response(JSON.stringify({ error: err.message }), {
-          status: err.status,
-          headers: new Headers({ 'content-type': 'application/json' }),
-        }),
-      () => new Response(null, { status: HttpStatusCode.NoContent }),
+      (err) => ({
+        status: err.status,
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ error: err.message }),
+      }),
+      (message) => ({
+        status: HttpStatusCode.Ok,
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ message }),
+      }),
     ),
   )()
 
-  context.res = res
+  if (res.status >= 400) {
+    context.log.error(JSON.parse(res.body).error)
+  } else {
+    context.log.info(JSON.parse(res.body).message)
+  }
+
+  context.res = {
+    status: res.status,
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: res.body,
+  }
 }
 
 export default httpTrigger
