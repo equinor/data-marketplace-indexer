@@ -9,6 +9,8 @@ const timerTrigger: AzureFunction = async function (context: Context, myTimer: T
   })
   const timeStamp = new Date().toISOString()
 
+  console.log('REMOVE THIS!!! This is only to test CI scripts')
+
   if (myTimer.isPastDue) {
     context.log('Timer function is running late!')
   }
