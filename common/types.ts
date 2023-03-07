@@ -4,8 +4,8 @@ import * as IO from 'fp-ts/lib/IO'
 export type GetProcessEnvType = IO.IO<E.Either<string, string>>
 
 // @TODO data marketplace models
-export type CollibraAsset = {
-  objectID: string
+export type IndexableAsset = {
+  objectID: string | null
   createdAt: string
   excerpt: string
   description: string
@@ -15,7 +15,7 @@ export type CollibraAsset = {
   qualityScore: number
   tags: string[]
   community: string[]
-  type: 'Data Product'
+  type: string
   updatedAt: string
   updateFrequency: string
   dataOfficeAdmin: string[]
