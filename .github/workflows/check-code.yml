@@ -2,7 +2,13 @@ name: Check code
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
+    paths:
+      - '**/*.{j,t}s'
   pull_request:
+    paths:
+      - '**/*.{j,t}s'
 
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
