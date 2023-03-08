@@ -1,27 +1,30 @@
 import type { Asset, Maintainer } from '@equinor/data-marketplace-models'
 import { toPlainText } from '@portabletext/toolkit'
+import * as A from 'fp-ts/lib/Array'
+import { pipe } from 'fp-ts/lib/function'
 
 import { IndexableAsset } from './types'
+
+const getMaintainerByRoleName = (roleName: string) => (maintainers: Maintainer[]) =>
+  pipe(
+    maintainers,
+    A.filter((maintainer) => maintainer.role.name.toLocaleLowerCase() === roleName.toLowerCase()),
+    A.map((maintainer) => `${maintainer.firstName} ${maintainer.lastName}`),
+  )
 
 export const assetToIndexable =
   (maintainers: Maintainer[]) =>
   (asset: Asset): IndexableAsset => ({
     community: [asset.community.name],
     createdAt: new Date(asset.createdAt).toJSON(),
-    dataOfficeAdmin: maintainers
-      .filter((maintainer) => maintainer.role.name.toLowerCase() === 'data office admin')
-      .map((maintainer) => `${maintainer.firstName} ${maintainer.lastName}`),
-    dataSteward: maintainers
-      .filter((maintainer) => maintainer.role.name.toLowerCase() === 'data steward')
-      .map((maintainer) => `${maintainer.firstName} ${maintainer.lastName}`),
+    dataOfficeAdmin: getMaintainerByRoleName('data office admin')(maintainers),
+    dataSteward: getMaintainerByRoleName('data steward')(maintainers),
     description: toPlainText(asset.description ?? []),
     excerpt: toPlainText(asset.excerpt ?? []),
     id: asset.id,
     name: asset.name,
     objectID: asset.id,
-    owner: maintainers
-      .filter((maintainer) => maintainer.role.name.toLowerCase() === 'owner')
-      .map((maintainer) => `${maintainer.firstName} ${maintainer.lastName}`),
+    owner: getMaintainerByRoleName('owner')(maintainers),
     provider: 'Collibra',
     qualityScore: 0,
     tags: asset.tags?.map((tag) => tag.label) ?? [],
