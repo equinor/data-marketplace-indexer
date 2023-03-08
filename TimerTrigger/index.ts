@@ -15,12 +15,16 @@ const timerTrigger: AzureFunction = async function (context: Context, myTimer: T
 
   const buf = Buffer.from(`${process.env.COLLIBRA_SYS_USER}:${process.env.COLLIBRA_SYS_PASS}`)
 
-  await axios.post('/api/index-collibra', {
-    headers: {
-      authorization: `Basic ${buf.toString('base64')}`,
-    },
-  })
-  context.log('Timer trigger function ran!', timeStamp)
+  try {
+    await axios.get(`${process.env.INDEXER_BASE_URL}/api/index-collibra`, {
+      headers: { authorization: `Basic ${buf.toString('base64')}` },
+      params: { code: process.env.ADAPTER_SERVICE_APP_KEY ?? '' },
+    })
+
+    context.log('TimerTrigger ran successfully', timeStamp)
+  } catch (error) {
+    context.log.error('TimerTrigger failed', error)
+  }
 }
 
 export default timerTrigger
