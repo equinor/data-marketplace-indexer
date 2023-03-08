@@ -14,4 +14,5 @@ export const fetchData = (authorization: string): TE.TaskEither<NetError, Asset[
     E.mapLeft(toNetError(HttpStatusCode.InternalServerError)),
     TE.fromEither,
     TE.chain(Get<Asset[]>('/assets')({ headers: { authorization } })),
+    TE.mapLeft(toNetError(HttpStatusCode.InternalServerError)),
   )
