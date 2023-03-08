@@ -14,7 +14,8 @@ import { getEnvironment } from '../common/env'
 import { toNetError } from '../common/net/toNetError'
 import { IndexableAsset } from '../common/types'
 
-import { fetchData } from './src/fetchData'
+import { fetchData as getAssets } from './src/fetchData'
+import { getAssetMaintainers } from './src/getAssetMaintainers'
 import { indexSettings } from './src/indexSettings'
 
 const indexIdentifier = 'Collibra'
@@ -33,10 +34,15 @@ const httpTrigger: AzureFunction = async function (context: Context): Promise<vo
 
   const res = await pipe(
     getAuthValue(context),
+    TE.bindTo('authorization'),
     TE.mapLeft(toNetError(HttpStatusCode.Unauthorized)),
-    TE.map(fetchData),
-    TE.flatten,
-    TE.map(A.map<Asset, IndexableAsset>(assetToIndexable([]))),
+    TE.bind('assets', ({ authorization }) => getAssets(authorization)),
+    TE.bind('maintainers', ({ authorization, assets }) =>
+      pipe(A.map(getAssetMaintainers(authorization))(assets), TE.sequenceArray),
+    ),
+    TE.map(({ assets, maintainers }) =>
+      A.mapWithIndex<Asset, IndexableAsset>((i, asset) => assetToIndexable(maintainers[i])(asset))(assets),
+    ),
     TE.chainW((data) => pipe(updateAlgolia(), E.ap(E.of(data)), TE.fromEither)),
     TE.flatten,
     TE.mapLeft(toNetError(HttpStatusCode.InternalServerError)),
