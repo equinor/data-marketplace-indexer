@@ -24,7 +24,7 @@ export const assetToIndexable =
     id: asset.id,
     name: asset.name,
     objectID: asset.id,
-    owner: getMaintainerByRoleName('owner')(maintainers),
+    owner: getMaintainerByRoleName('data product owner')(maintainers),
     provider: 'Collibra',
     qualityScore: 0,
     tags: asset.tags?.map((tag) => tag.label) ?? [],
