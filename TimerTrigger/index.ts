@@ -18,7 +18,7 @@ const timerTrigger: AzureFunction = async function (context: Context, myTimer: T
   try {
     await axios.get(`${process.env.INDEXER_BASE_URL}/api/index-collibra`, {
       headers: { authorization: `Basic ${buf.toString('base64')}` },
-      params: { code: process.env.ADAPTER_SERVICE_APP_KEY ?? '' },
+      params: { code: process.env.INDEXER_APP_KEY ?? '' },
     })
 
     context.log('TimerTrigger ran successfully', timeStamp)
