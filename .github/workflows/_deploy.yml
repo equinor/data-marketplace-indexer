@@ -41,7 +41,7 @@ jobs:
         id: checkout-internal
         uses: actions/checkout@v3
         with:
-          repository: "equinor/data-marketplace-internal"
+          repository: 'equinor/data-marketplace-internal'
           ref: main
           token: ${{ secrets.PAT }}
       - name: Creating Azure Function App 🏗️
@@ -49,6 +49,7 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
+            az config set bicep.use_binary_from_path=False
             az deployment group create \
             --name az-func-indexer-deploy \
             --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
@@ -115,8 +116,8 @@ jobs:
             $profile = $profile.Replace("`r", "").Replace("`n", "")
             Write-Output "pubprofile=$profile" >> $GITHUB_OUTPUT
             Remove-Variable profile
-          azPSVersion: "latest"
-      - name: "Create output directory"
+          azPSVersion: 'latest'
+      - name: 'Create output directory'
         shell: bash
         run: |
           mkdir ${{ env.BUILD_ARTIFACT_PATH }}
