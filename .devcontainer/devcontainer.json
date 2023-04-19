@@ -1,12 +1,12 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.203.0/containers/alpine
 {
-	"name": "Alpine",
+	"name": "typescipt-node",
 	"build": {
 		"dockerfile": "Dockerfile",
 		// Update 'VARIANT' to pick an Alpine version: 3.11, 3.12, 3.13, 3.14
 		"args": {
-			"VARIANT": "3.17"
+			"VARIANT": "16"
 		}
 	},
 	// Set *default* container specific settings.json values on container create. 
