@@ -7,5 +7,5 @@ export const indexSettings: Settings = {
   attributeForDistinct: 'id',
   distinct: 1,
   advancedSyntax: true,
-  ranking: ['desc(name)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
+  ranking: ['asc(name)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
 }
